@@ -1,4 +1,9 @@
-# OpenFOAM-preCICE adapter
+# foam-extend adapter for preCICE (work in progress)
+
+> [!WARNING]  
+> This is a work-in-progress project to support foam-extend. It does not yet do what it should. Don't look any further into this repository while you can read this message.
+>
+> Forked from https://github.com/precice/openfoam-adapter
 
 [![Ask questions in the forum](https://img.shields.io/badge/community-discourse_forum-orange?link=https%3A%2F%2Fprecice.discourse.group%2F)](https://precice.discourse.group/)
 [![Build with OpenFOAM v2404](https://github.com/precice/openfoam-adapter/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/precice/openfoam-adapter/actions/workflows/build.yml)
