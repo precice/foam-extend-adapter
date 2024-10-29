@@ -33,7 +33,7 @@ SourceFiles
 #define coupledPressureFvPatchField_H
 
 #include "fvPatchField.H"
-#include "fixedFluxExtrapolatedPressureFvPatchScalarField.H"
+#include "fixedFluxPressureFvPatchScalarField.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -45,7 +45,7 @@ namespace Foam
 \*---------------------------------------------------------------------------*/
 
 class coupledPressureFvPatchField
-: public fixedFluxExtrapolatedPressureFvPatchScalarField
+: public fixedFluxPressureFvPatchScalarField
 {
 
 private:

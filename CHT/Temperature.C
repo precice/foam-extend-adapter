@@ -90,7 +90,7 @@ void preciceAdapter::CHT::Temperature::read(double* buffer, const unsigned int d
     {
         if (cellSetNames_.empty())
         {
-            for (auto& cell : T_->ref())
+            for (auto& cell : T_->dimensionedInternalField())
             {
                 cell = buffer[bufferIndex++];
             }
@@ -105,7 +105,7 @@ void preciceAdapter::CHT::Temperature::read(double* buffer, const unsigned int d
                 for (const auto& currentCell : cells)
                 {
                     // Copy temperature into the buffer
-                    T_->ref()[currentCell] = buffer[bufferIndex++];
+                    T_->dimensionedInternalField()[currentCell] = buffer[bufferIndex++];
                 }
             }
         }
@@ -120,7 +120,7 @@ void preciceAdapter::CHT::Temperature::read(double* buffer, const unsigned int d
         forAll(T_->boundaryField()[patchID], i)
         {
             // Set the temperature as the buffer value
-            T_->boundaryFieldRef()[patchID][i] =
+            T_->boundaryField()[patchID][i] =
                 buffer[bufferIndex++];
         }
     }

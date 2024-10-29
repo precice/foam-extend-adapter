@@ -48,11 +48,11 @@ std::size_t preciceAdapter::FF::Pressure::write(double* buffer, bool meshConnect
         int patchID = patchIDs_.at(j);
 
         // For every cell of the patch
-        forAll(p_->boundaryFieldRef()[patchID], i)
+        forAll(p_->boundaryField()[patchID], i)
         {
             // Copy the pressure into the buffer
             buffer[bufferIndex++] =
-                p_->boundaryFieldRef()[patchID][i];
+                p_->boundaryField()[patchID][i];
         }
     }
     return bufferIndex;
@@ -66,7 +66,7 @@ void preciceAdapter::FF::Pressure::read(double* buffer, const unsigned int dim)
     {
         if (cellSetNames_.empty())
         {
-            for (auto& cell : p_->ref())
+            for (auto& cell : p_->dimensionedInternalField())
             {
                 cell = buffer[bufferIndex++];
             }
@@ -81,7 +81,7 @@ void preciceAdapter::FF::Pressure::read(double* buffer, const unsigned int dim)
                 for (const auto& currentCell : cells)
                 {
                     // Copy the pressure into the buffer
-                    p_->ref()[currentCell] = buffer[bufferIndex++];
+                    p_->dimensionedInternalField()[currentCell] = buffer[bufferIndex++];
                 }
             }
         }
@@ -93,17 +93,17 @@ void preciceAdapter::FF::Pressure::read(double* buffer, const unsigned int dim)
         int patchID = patchIDs_.at(j);
 
         // Get the pressure value boundary patch
-        scalarField* valuePatchPtr = &p_->boundaryFieldRef()[patchID];
-        if (isA<coupledPressureFvPatchField>(p_->boundaryFieldRef()[patchID]))
+        scalarField* valuePatchPtr = &p_->boundaryField()[patchID];
+        if (isA<coupledPressureFvPatchField>(p_->boundaryField()[patchID]))
         {
             valuePatchPtr = &refCast<coupledPressureFvPatchField>(
-                                 p_->boundaryFieldRef()[patchID])
+                                 p_->boundaryField()[patchID])
                                  .refValue();
         }
         scalarField& valuePatch = *valuePatchPtr;
 
         // For every cell of the patch
-        forAll(p_->boundaryFieldRef()[patchID], i)
+        forAll(p_->boundaryField()[patchID], i)
         {
             // Set the pressure as the buffer value
             valuePatch[i] =

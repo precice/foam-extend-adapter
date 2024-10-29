@@ -22,7 +22,7 @@ std::size_t preciceAdapter::FF::PressureGradient::write(double* buffer, bool mes
         int patchID = patchIDs_.at(j);
 
         // Get the pressure gradient boundary patch
-        const scalarField gradientPatch((p_->boundaryFieldRef()[patchID])
+        const scalarField gradientPatch((p_->boundaryField()[patchID])
                                             .snGrad());
 
         // For every cell of the patch
@@ -48,7 +48,7 @@ void preciceAdapter::FF::PressureGradient::read(double* buffer, const unsigned i
         // Get the pressure gradient boundary patch
         scalarField& gradientPatch =
             refCast<fixedGradientFvPatchScalarField>(
-                p_->boundaryFieldRef()[patchID])
+                p_->boundaryField()[patchID])
                 .gradient();
 
         // For every cell of the patch

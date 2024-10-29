@@ -91,14 +91,14 @@ std::size_t preciceAdapter::FF::Velocity::write(double* buffer, bool meshConnect
         // Correct the velocity by the boundary face flux
         if (fluxCorrection_)
         {
-            scalarField phip = phi_->boundaryFieldRef()[patchID];
+            scalarField phip = phi_->boundaryField()[patchID];
             vectorField n = U_->boundaryField()[patchID].patch().nf();
-            const scalarField& magS = U_->boundaryFieldRef()[patchID].patch().magSf();
+            const scalarField& magS = U_->boundaryField()[patchID].patch().magSf();
             UPatch = UPatch - n * (n & U_->boundaryField()[patchID]) + n * phip / magS;
         }
 
         // For every cell of the patch
-        forAll(U_->boundaryFieldRef()[patchID], i)
+        forAll(U_->boundaryField()[patchID], i)
         {
             // Copy the velocity into the buffer
             // x-dimension
@@ -128,7 +128,7 @@ void preciceAdapter::FF::Velocity::read(double* buffer, const unsigned int dim)
     {
         if (cellSetNames_.empty())
         {
-            for (auto& cell : U_->ref())
+            for (auto& cell : U_->dimensionedInternalField())
             {
                 // x-dimension
                 cell.x() = buffer[bufferIndex++];
@@ -153,15 +153,15 @@ void preciceAdapter::FF::Velocity::read(double* buffer, const unsigned int dim)
                 for (const auto& currentCell : cells)
                 {
                     // x-dimension
-                    U_->ref()[currentCell].x() = buffer[bufferIndex++];
+                    U_->dimensionedInternalField()[currentCell].x() = buffer[bufferIndex++];
 
                     // y-dimension
-                    U_->ref()[currentCell].y() = buffer[bufferIndex++];
+                    U_->dimensionedInternalField()[currentCell].y() = buffer[bufferIndex++];
 
                     if (dim == 3)
                     {
                         // z-dimension
-                        U_->ref()[currentCell].z() = buffer[bufferIndex++];
+                        U_->dimensionedInternalField()[currentCell].z() = buffer[bufferIndex++];
                     }
                 }
             }
@@ -174,17 +174,17 @@ void preciceAdapter::FF::Velocity::read(double* buffer, const unsigned int dim)
         int patchID = patchIDs_.at(j);
 
         // Get the velocity value boundary patch
-        vectorField* valuePatchPtr = &U_->boundaryFieldRef()[patchID];
-        if (isA<coupledVelocityFvPatchField>(U_->boundaryFieldRef()[patchID]))
+        vectorField* valuePatchPtr = &U_->boundaryField()[patchID];
+        if (isA<coupledVelocityFvPatchField>(U_->boundaryField()[patchID]))
         {
             valuePatchPtr = &refCast<coupledVelocityFvPatchField>(
-                                 U_->boundaryFieldRef()[patchID])
+                                 U_->boundaryField()[patchID])
                                  .refValue();
         }
         vectorField& valuePatch = *valuePatchPtr;
 
         // For every cell of the patch
-        forAll(U_->boundaryFieldRef()[patchID], i)
+        forAll(U_->boundaryField()[patchID], i)
         {
             // Set the velocity as the buffer value
             // x-dimension

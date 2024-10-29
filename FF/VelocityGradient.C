@@ -23,7 +23,7 @@ std::size_t preciceAdapter::FF::VelocityGradient::write(double* buffer, bool mes
         int patchID = patchIDs_.at(j);
 
         // Get the velocity gradient boundary patch
-        vectorField gradientPatch((U_->boundaryFieldRef()[patchID])
+        vectorField gradientPatch((U_->boundaryField()[patchID])
                                       .snGrad());
 
         // For every cell of the patch
@@ -60,20 +60,19 @@ void preciceAdapter::FF::VelocityGradient::read(double* buffer, const unsigned i
 
         // Get the velocity gradient boundary patch
         vectorField* gradientPatchPtr;
-        if (isA<coupledVelocityFvPatchField>(U_->boundaryFieldRef()[patchID]))
+        if (isA<coupledVelocityFvPatchField>(U_->boundaryField()[patchID]))
         {
             gradientPatchPtr = &refCast<coupledVelocityFvPatchField>(
-                                    U_->boundaryFieldRef()[patchID])
+                                    U_->boundaryField()[patchID])
                                     .refGrad();
         }
         else
         {
             gradientPatchPtr = &refCast<fixedGradientFvPatchVectorField>(
-                                    U_->boundaryFieldRef()[patchID])
+                                    U_->boundaryField()[patchID])
                                     .gradient();
         }
         vectorField& gradientPatch = *gradientPatchPtr;
-
 
         // For every cell of the patch
         forAll(gradientPatch, i)
