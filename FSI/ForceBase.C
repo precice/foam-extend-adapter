@@ -14,7 +14,7 @@ preciceAdapter::FSI::ForceBase::ForceBase(
         && solverType_.compare("compressible") != 0
         && solverType_.compare("solid") != 0)
     {
-        FatalErrorInFunction
+        FatalErrorIn("FSI::ForceBase::ForceBase(const fvMesh&, const std::string)")
             << "Force based calculations only support "
             << "compressible, incompressible, or solid solver types."
             << exit(FatalError);
@@ -80,7 +80,7 @@ Foam::tmp<Foam::volScalarField> preciceAdapter::FSI::ForceBase::rho() const
     }
     else
     {
-        FatalErrorInFunction
+        FatalErrorIn("FSI::ForceBase::rho()")
             << "Did not find the correct rho."
             << exit(FatalError);
 
@@ -120,7 +120,7 @@ Foam::tmp<Foam::volScalarField> preciceAdapter::FSI::ForceBase::mu() const
     }
     else
     {
-        FatalErrorInFunction
+        FatalErrorIn("FSI::ForceBase::mu()")
             << "Did not find the correct mu."
             << exit(FatalError);
 
@@ -167,7 +167,7 @@ std::size_t preciceAdapter::FSI::ForceBase::writeToBuffer(double* buffer,
         }
         else
         {
-            FatalErrorInFunction
+            FatalErrorIn("FSI::ForceBase::writeToBuffer(double*, volVectorField&, const unsigned int )")
                 << "Forces calculation does only support "
                 << "compressible or incompressible solver type."
                 << exit(FatalError);
@@ -196,7 +196,7 @@ void preciceAdapter::FSI::ForceBase::readFromBuffer(double* buffer) const
      * the outer for the locations and the inner for the dimensions.
      * See the preCICE readBlockVectorData() implementation.
      */
-    FatalErrorInFunction
+    FatalErrorIn("FSI:ForceBase::readFromBuffer(double*)")
         << "Reading forces is not supported."
         << exit(FatalError);
 }

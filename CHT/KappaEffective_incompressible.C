@@ -94,7 +94,7 @@ void preciceAdapter::CHT::KappaEff_Incompressible::extract(uint patchID, bool me
     }
     else
     {
-        WarningInFunction
+        WarningIn("CHT::KappaEff_Incompressible::extract(uint, bool")
             << "The object alphat does not exist. "
             << "An incompressible solver should create it explicitly "
             << "(e.g. in the createFields.H)."

@@ -50,7 +50,7 @@ Foam::coupledPressureFvPatchField::coupledPressureFvPatchField(
 {
     if (notNull(iF) && mapper.hasUnmapped())
     {
-        WarningInFunction
+        WarningIn("coupledPressureFvPatchField::coupledPressureFvPatchField(const coupledPressureFvPatchField&, const fvPatch&, const DimensionedField<Foam::scalar, volMesh>&, const fvPatchFieldMapper&)")
             << "On field " << iF.name() << " patch " << p.name()
             << " patchField " << this->type()
             << " : mapper does not map all values." << nl

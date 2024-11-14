@@ -41,7 +41,7 @@ std::size_t preciceAdapter::FSI::DisplacementDelta::write(double* buffer, bool m
      * the outer for the locations and the inner for the dimensions.
      * See the preCICE writeBlockVectorData() implementation.
      */
-    FatalErrorInFunction
+    FatalErrorIn("FSI::DisplacementDelta::write(double*, bool, const unsigned int)")
         << "Writing displacementDeltas is not supported."
         << exit(FatalError);
     return 0;

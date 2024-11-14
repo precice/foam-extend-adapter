@@ -64,7 +64,7 @@ preciceAdapter::Interface::Interface(
         // Throw an error if the patch was not found
         if (patchID == -1)
         {
-            FatalErrorInFunction
+            FatalErrorIn("Interface::Interface(precice::Participant&, const fvMesh&, std::string, std::string, std::vector<std::string>, std::vector<std::string>, bool, bool, const std::string&, const std::string&)")
                 << "ERROR: Patch '"
                 << patchNames.at(j)
                 << "' does not exist."
