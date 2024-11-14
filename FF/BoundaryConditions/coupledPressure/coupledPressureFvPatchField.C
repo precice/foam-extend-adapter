@@ -48,7 +48,7 @@ Foam::coupledPressureFvPatchField::coupledPressureFvPatchField(
   refGrad_(ptf.refGrad_),
   valueFraction_(ptf.valueFraction_)
 {
-    if (notNull(iF) && mapper.hasUnmapped())
+    if (notNull(iF))
     {
         WarningInFunction
             << "On field " << iF.name() << " patch " << p.name()
