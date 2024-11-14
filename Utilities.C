@@ -14,6 +14,14 @@ void adapterInfo(const std::string message, const std::string level)
     else if (level.compare("warning") == 0)
     {
         // Produce a warning message with cyan header
+        WarningIn("adapterInfo(const std::string, const std::string")
+            << "\033[36m" // cyan color
+            << "Warning in the preCICE adapter: "
+            << "\033[0m" // restore color
+            << nl
+            << message.c_str()
+            << nl
+            << nl;
     }
     else if (level.compare("error") == 0)
     {
@@ -21,6 +29,14 @@ void adapterInfo(const std::string message, const std::string level)
         // and exit the functionObject.
         // It will also exit the simulation, unless it
         // is called inside the functionObject's read().
+        FatalErrorIn("adapterInfo(const std::string, const std::string")
+            << "\033[31m" // red color
+            << "Error in the preCICE adapter: "
+            << "\033[0m" // restore color
+            << nl
+            << message.c_str()
+            << nl
+            << exit(FatalError);
     }
     else if (level.compare("error-deferred") == 0)
     {
@@ -31,6 +47,14 @@ void adapterInfo(const std::string message, const std::string level)
         // as an error, so that OpenFOAM does not exit,
         // but the user still sees that this is the actual
         // problem. We catch these errors and exit later.
+        WarningIn("adapterInfo(const std::string, const std::string")
+            << "\033[31m" // red color
+            << "Error (deferred - will exit later) in the preCICE adapter: "
+            << "\033[0m" // restore color
+            << nl
+            << message.c_str()
+            << nl
+            << nl;
     }
     else if (level.compare("debug") == 0)
     {
