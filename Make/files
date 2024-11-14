@@ -4,6 +4,27 @@ Interface.C
 
 CouplingDataUser.C
 
+CHT/Temperature.C
+CHT/KappaEffective_base.C
+CHT/HeatFlux_base.C
+CHT/HeatTransferCoefficient_base.C
+CHT/KappaEffective_compressible.C
+CHT/HeatFlux_compressible.C
+CHT/HeatTransferCoefficient_compressible.C
+CHT/KappaEffective_incompressible.C
+CHT/HeatFlux_incompressible.C
+CHT/HeatTransferCoefficient_incompressible.C
+CHT/SinkTemperature.C
+
+CHT/CHT.C
+
+FSI/FSI.C
+FSI/ForceBase.C
+FSI/Force.C
+FSI/Stress.C
+FSI/Displacement.C
+FSI/DisplacementDelta.C
+
 FF/FF.C
 FF/Velocity.C
 FF/VelocityGradient.C
