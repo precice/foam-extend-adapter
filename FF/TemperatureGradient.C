@@ -48,7 +48,7 @@ void preciceAdapter::FF::TemperatureGradient::read(double* buffer, const unsigne
 
         // Get the Temperature gradient boundary patch
         scalarField& gradientPatch =
-            refCast<fixedGradientFvPatchScalarField>(
+            refCast<fixedGradientFvPatchField>(
                 T_->boundaryField()[patchID])
                 .gradient();
 
