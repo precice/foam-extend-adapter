@@ -1,5 +1,6 @@
 #include "TemperatureGradient.H"
 #include "mixedFvPatchFields.H"
+#include "fixedGradientFvPatchField.H"
 
 using namespace Foam;
 
