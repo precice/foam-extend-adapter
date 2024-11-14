@@ -7,5 +7,5 @@ git config --global --add safe.directory /home/foamuser/precice/./.git
 git clone . ../adapter
 cd ../adapter
 git checkout foam-extend-4.0
-gcc --version
-#LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH ./Allwmake
+alias g++="g++ -std=c++11"
+LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH ./Allwmake
