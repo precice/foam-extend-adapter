@@ -23,7 +23,7 @@ std::size_t preciceAdapter::FF::AlphaGradient::write(double* buffer, bool meshCo
         int patchID = patchIDs_.at(j);
 
         // Get the Alpha gradient boundary patch
-        const scalarField gradientPatch((Alpha_->boundaryFieldRef()[patchID])
+        const scalarField gradientPatch((Alpha_->boundaryField()[patchID])
                                             .snGrad());
 
         // For every cell of the patch
@@ -49,7 +49,7 @@ void preciceAdapter::FF::AlphaGradient::read(double* buffer, const unsigned int 
         // Get the Alpha gradient boundary patch
         scalarField& gradientPatch =
             refCast<fixedGradientFvPatchScalarField>(
-                Alpha_->boundaryFieldRef()[patchID])
+                Alpha_->boundaryField()[patchID])
                 .gradient();
 
         // For every cell of the patch
