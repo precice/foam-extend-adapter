@@ -30,6 +30,13 @@ FF/Velocity.C
 FF/VelocityGradient.C
 FF/Pressure.C
 FF/PressureGradient.C
+FF/Temperature.C
+FF/TemperatureGradient.C
+FF/Alpha.C
+FF/AlphaGradient.C
+FF/Phi.C
+FF/BoundaryConditions/coupledVelocity/coupledVelocityFvPatchField.C
+FF/BoundaryConditions/coupledPressure/coupledPressureFvPatchField.C
 
 Adapter.C
 clockValue.C
