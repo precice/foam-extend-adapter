@@ -101,12 +101,12 @@ void Foam::coupledVelocityFvPatchField::updateCoeffs()
     int t = this->patch().boundaryMesh().mesh().time().timeIndex();
     if (t - t0 == 1)
     {
-        this->valueFraction() = 1 - (min(refValue_ & n)>=0);
+        this->valueFraction() = 1 - pos(refValue_ & n);
 
     }
     else
     {
-        this->valueFraction() = 1 - (min(phip)>=0);
+        this->valueFraction() = 1 - pos(phip);
     }
     fvPatchVectorField::updateCoeffs();
 }

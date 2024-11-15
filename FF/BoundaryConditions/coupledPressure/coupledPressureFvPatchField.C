@@ -105,11 +105,11 @@ void Foam::coupledPressureFvPatchField::updateCoeffs()
     int t = this->patch().boundaryMesh().mesh().time().timeIndex();
     if (t - t0 == 1)
     {
-        this->valueFraction() = (min(Up & n)>=0);
+        this->valueFraction() = pos(Up & n);
     }
     else
     {
-        this->valueFraction() = (min(phip)>=0);
+        this->valueFraction() = pos(phip);
     }
     fixedFluxPressureFvPatchScalarField::updateCoeffs();
 }
