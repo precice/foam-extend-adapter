@@ -10,9 +10,9 @@ Foam::coupledVelocityFvPatchField::coupledVelocityFvPatchField(
     const fvPatch& p,
     const DimensionedField<vector, volMesh>& iF)
 : fvPatchField<vector>(p, iF),
-  refValue_(p.size(), Zero),
-  refGrad_(p.size(), Zero),
-  valueFraction_(p.size(), Zero)
+  refValue_(p.size()),
+  refGrad_(p.size()),
+  valueFraction_(p.size())
 {
 }
 
