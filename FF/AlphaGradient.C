@@ -1,5 +1,6 @@
 #include "AlphaGradient.H"
 #include "mixedFvPatchFields.H"
+#include "fixedGradientFvPatchFields.H"
 
 using namespace Foam;
 
