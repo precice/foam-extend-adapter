@@ -49,7 +49,7 @@ void preciceAdapter::FF::AlphaGradient::read(double* buffer, const unsigned int 
 
         // Get the Alpha gradient boundary patch
         scalarField& gradientPatch =
-            refCast<fixedGradientFvPatchField<scalar>>(
+            refCast<fixedGradientFvPatchField<Foam::scalar>>(
                 Alpha_->boundaryField()[patchID])
                 .gradient();
 
