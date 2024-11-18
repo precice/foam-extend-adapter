@@ -65,7 +65,7 @@ void preciceAdapter::FF::Alpha::read(double* buffer, const unsigned int dim)
     {
         if (cellSetNames_.empty())
         {
-            for (auto& cell : Alpha_->ref())
+            for (auto& cell : Alpha_->internalField())
             {
                 cell = buffer[bufferIndex++];
             }
