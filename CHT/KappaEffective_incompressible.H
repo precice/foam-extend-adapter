@@ -3,7 +3,7 @@
 
 #include "KappaEffective_base.H"
 #include "incompressible/turbulenceModel/lnInclude/turbulenceModel.H"
-#include "volScalarField.H" 
+#include "volFieldsFwd.H" 
 
 namespace preciceAdapter
 {
