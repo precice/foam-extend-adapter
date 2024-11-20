@@ -10,9 +10,9 @@ Foam::coupledVelocityFvPatchField::coupledVelocityFvPatchField(
     const fvPatch& p,
     const DimensionedField<vector, volMesh>& iF)
 : fvPatchField<vector>(p, iF),
-  refValue_(p.size(), Zero),
-  refGrad_(p.size(), Zero),
-  valueFraction_(p.size(), Zero)
+  refValue_(p.size()),
+  refGrad_(p.size()),
+  valueFraction_(p.size())
 {
 }
 
@@ -23,8 +23,8 @@ Foam::coupledVelocityFvPatchField::coupledVelocityFvPatchField(
     const dictionary& dict)
 : fvPatchField<vector>(p, iF),
   refValue_("refValue", dict, p.size()),
-  valueFraction_(p.size(), Zero),
-  phiName_(dict.getOrDefault<word>("phi", "phi"))
+  valueFraction_(p.size()),
+  phiName_(dict.lookupOrDefault<word>("phi", "phi"))
 {
     if (dict.found("refGradient"))
     {
@@ -32,7 +32,7 @@ Foam::coupledVelocityFvPatchField::coupledVelocityFvPatchField(
     }
     else
     {
-        this->refGrad() = vectorField(p.size(), Zero);
+        this->refGrad() = vectorField(p.size());
     }
 
     vectorField::operator=(
@@ -101,11 +101,12 @@ void Foam::coupledVelocityFvPatchField::updateCoeffs()
     int t = this->patch().boundaryMesh().mesh().time().timeIndex();
     if (t - t0 == 1)
     {
-        this->valueFraction() = 1 - pos0(refValue_ & n);
+        this->valueFraction() = 1 - pos(refValue_ & n);
+
     }
     else
     {
-        this->valueFraction() = 1 - pos0(phip);
+        this->valueFraction() = 1 - pos(phip);
     }
     fvPatchVectorField::updateCoeffs();
 }

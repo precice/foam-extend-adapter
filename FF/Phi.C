@@ -22,11 +22,11 @@ std::size_t preciceAdapter::FF::Phi::write(double* buffer, bool meshConnectivity
         int patchID = patchIDs_.at(j);
 
         // For every cell of the patch
-        forAll(phi_->boundaryFieldRef()[patchID], i)
+        forAll(phi_->boundaryField()[patchID], i)
         {
             // Copy the Phi into the buffer
             buffer[bufferIndex++] =
-                phi_->boundaryFieldRef()[patchID][i];
+                phi_->boundaryField()[patchID][i];
         }
     }
     return bufferIndex;
@@ -41,9 +41,9 @@ void preciceAdapter::FF::Phi::read(double* buffer, const unsigned int dim)
     {
         int patchID = patchIDs_.at(j);
 
-        forAll(phi_->boundaryFieldRef()[patchID], i)
+        forAll(phi_->boundaryField()[patchID], i)
         {
-            phi_->boundaryFieldRef()[patchID][i] = -buffer[bufferIndex++];
+            phi_->boundaryField()[patchID][i] = -buffer[bufferIndex++];
         }
     }
 }
