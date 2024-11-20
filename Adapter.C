@@ -34,7 +34,7 @@ bool preciceAdapter::Adapter::configFileRead()
                 "preciceDict",
                 runTime_.system(),
                 mesh_,
-                IOobject::MUST_READ_IF_MODIFIED,
+                IOobject::MUST_READ,
                 IOobject::NO_WRITE));
 
         // Read and display the preCICE configuration file name
