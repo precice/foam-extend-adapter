@@ -147,10 +147,10 @@ public:
     // you may put your calls inside the following methods.
 
     // Update for changes of mesh
-    void updateMesh(const mapPolyMesh& mpm) final;
+    void updateMesh(const mapPolyMesh& mpm);
 
     // Update for changes of mesh
-    void movePoints(const pointField& mesh) final;
+    void movePoints(const pointField& mesh);
     
 };
 
