@@ -615,18 +615,6 @@ void preciceAdapter::Adapter::adjustSolverTimeStepAndReadData()
         // Have we already stored the timestep?
         if (!useStoredTimestep_)
         {
-            // Show a warning if runTimeModifiable is set
-            if (runTime_.runTimeModifiable())
-            {
-                adapterInfo(
-                    "You have enabled 'runTimeModifiable' in the "
-                    "controlDict. The preciceAdapter does not yet "
-                    "fully support this functionality when "
-                    "'adjustableTimestep' is not enabled. "
-                    "If you modify the 'deltaT' in the controlDict "
-                    "during the simulation, it will not be updated.",
-                    "warning");
-            }
 
             // Store the value
             timestepStored_ = runTime_.deltaT().value();
