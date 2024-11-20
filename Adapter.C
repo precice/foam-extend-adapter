@@ -899,7 +899,7 @@ void preciceAdapter::Adapter::setupCheckpointing()
 #undef doLocalCode
 #define doLocalCode(GeomField)                                           \
     /* Checkpoint registered GeomField objects */                        \
-    for (const word& obj : mesh_.sortedNames("GeomField"))               \
+    for (const word& obj : mesh_.names("GeomField"))               \
     {                                                                    \
         addCheckpointField(mesh_.thisDb().lookupObject<GeomField>(obj)); \
         DEBUG(adapterInfo("Checkpoint " + obj + " : " #GeomField));      \
