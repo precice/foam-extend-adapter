@@ -23,7 +23,7 @@ Foam::coupledVelocityFvPatchField::coupledVelocityFvPatchField(
     const dictionary& dict)
 : fvPatchField<vector>(p, iF),
   refValue_("refValue", dict, p.size()),
-  valueFraction_(p.size(), Zero),
+  valueFraction_(p.size()),
   phiName_(dict.lookupOrDefault<word>("phi", "phi"))
 {
     if (dict.found("refGradient"))
@@ -32,7 +32,7 @@ Foam::coupledVelocityFvPatchField::coupledVelocityFvPatchField(
     }
     else
     {
-        this->refGrad() = vectorField(p.size(), Zero);
+        this->refGrad() = vectorField(p.size());
     }
 
     vectorField::operator=(
