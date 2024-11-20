@@ -1,6 +1,7 @@
 #ifndef PRECICEADAPTER_H
 #define PRECICEADAPTER_H
 
+#include "backport/nullObject.H"
 #include "Interface.H"
 
 // Conjugate Heat Transfer module
