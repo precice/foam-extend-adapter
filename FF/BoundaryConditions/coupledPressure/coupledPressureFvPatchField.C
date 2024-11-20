@@ -1,7 +1,7 @@
 #include "coupledPressureFvPatchField.H"
 #include "addToRunTimeSelectionTable.H"
 #include "surfaceFields.H"
-
+#include "nullObject.H"
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
