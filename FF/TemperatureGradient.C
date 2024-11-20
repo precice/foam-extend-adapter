@@ -1,5 +1,6 @@
 #include "TemperatureGradient.H"
 #include "mixedFvPatchFields.H"
+#include "fixedGradientFvPatchFields.H"
 
 using namespace Foam;
 
@@ -23,7 +24,7 @@ std::size_t preciceAdapter::FF::TemperatureGradient::write(double* buffer, bool 
         int patchID = patchIDs_.at(j);
 
         // Get the Temperature gradient boundary patch
-        const scalarField gradientPatch((T_->boundaryFieldRef()[patchID])
+        const scalarField gradientPatch((T_->boundaryField()[patchID])
                                             .snGrad());
 
         // For every cell of the patch
@@ -48,8 +49,8 @@ void preciceAdapter::FF::TemperatureGradient::read(double* buffer, const unsigne
 
         // Get the Temperature gradient boundary patch
         scalarField& gradientPatch =
-            refCast<fixedGradientFvPatchScalarField>(
-                T_->boundaryFieldRef()[patchID])
+            refCast<fixedGradientFvPatchField<Foam::scalar>>(
+                T_->boundaryField()[patchID])
                 .gradient();
 
         // For every cell of the patch

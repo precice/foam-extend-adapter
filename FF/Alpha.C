@@ -47,11 +47,11 @@ std::size_t preciceAdapter::FF::Alpha::write(double* buffer, bool meshConnectivi
         int patchID = patchIDs_.at(j);
 
         // For every cell of the patch
-        forAll(Alpha_->boundaryFieldRef()[patchID], i)
+        forAll(Alpha_->boundaryField()[patchID], i)
         {
             // Copy the Alpha into the buffer
             buffer[bufferIndex++] =
-                Alpha_->boundaryFieldRef()[patchID][i];
+                Alpha_->boundaryField()[patchID][i];
         }
     }
     return bufferIndex;
@@ -65,7 +65,7 @@ void preciceAdapter::FF::Alpha::read(double* buffer, const unsigned int dim)
     {
         if (cellSetNames_.empty())
         {
-            for (auto& cell : Alpha_->ref())
+            for (auto& cell : Alpha_->internalField())
             {
                 cell = buffer[bufferIndex++];
             }
@@ -80,7 +80,7 @@ void preciceAdapter::FF::Alpha::read(double* buffer, const unsigned int dim)
                 for (const auto& currentCell : cells)
                 {
                     // Copy the pressure into the buffer
-                    Alpha_->ref()[currentCell] = buffer[bufferIndex++];
+                    Alpha_->internalField()[currentCell] = buffer[bufferIndex++];
                 }
             }
         }
@@ -91,9 +91,9 @@ void preciceAdapter::FF::Alpha::read(double* buffer, const unsigned int dim)
     {
         int patchID = patchIDs_.at(j);
         // For every cell of the patch
-        forAll(Alpha_->boundaryFieldRef()[patchID], i)
+        forAll(Alpha_->boundaryField()[patchID], i)
         {
-            Alpha_->boundaryFieldRef()[patchID][i] = buffer[bufferIndex++];
+            Alpha_->boundaryField()[patchID][i] = buffer[bufferIndex++];
         }
     }
 }
