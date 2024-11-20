@@ -76,13 +76,13 @@ void preciceAdapter::CHT::KappaEff_Incompressible::extract(uint patchID, bool me
 
     // Get the laminar viscosity from the turbulence model
     // TODO: Do we really need turbulence at the end?
-    const patchScalarField& nu(
+    const scalarField& nu(
         turbulence_.nu().boundaryField()[patchID]);
 
     // Compute the effective thermal diffusivity
     // (alphaEff = alpha + alphat = nu / Pr + nut / Prt)
 
-    patchScalarField alphaEff;
+    scalarField alphaEff;
 
     // Does the turbulent thermal diffusivity exist in the object registry?
     if (mesh_.foundObject<volScalarField>(nameAlphat_))
