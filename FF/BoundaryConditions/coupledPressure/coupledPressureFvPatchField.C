@@ -9,9 +9,9 @@ Foam::coupledPressureFvPatchField::coupledPressureFvPatchField(
     const fvPatch& p,
     const DimensionedField<Foam::scalar, volMesh>& iF)
 : fixedFluxPressureFvPatchScalarField(p, iF),
-  refValue_(p.size(), Zero),
-  refGrad_(p.size(), Zero),
-  valueFraction_(p.size(), Zero)
+  refValue_(p.size()),
+  refGrad_(p.size()),
+  valueFraction_(p.size())
 {
 }
 
@@ -23,7 +23,7 @@ Foam::coupledPressureFvPatchField::coupledPressureFvPatchField(
     const bool valueRequired)
 : fixedFluxPressureFvPatchScalarField(p, iF, dict),
   refValue_("refValue", dict, p.size()),
-  valueFraction_(p.size(), Zero),
+  valueFraction_(p.size()),
   phiName_(dict.lookupOrDefault<word>("phi", "phi")),
   uName_(dict.lookupOrDefault<word>("U", "U"))
 {
@@ -33,7 +33,7 @@ Foam::coupledPressureFvPatchField::coupledPressureFvPatchField(
     }
     else
     {
-        this->refGrad() = scalarField(p.size(), Zero);
+        this->refGrad() = scalarField(p.size());
     }
 }
 
