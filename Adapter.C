@@ -1,7 +1,8 @@
+#define ADAPTER_DEBUG_MODE 1
 #include "Adapter.H"
 #include "Interface.H"
 #include "Utilities.H"
-
+#include <typeinfo>
 #include "IOstreams.H"
 
 using namespace Foam;
@@ -38,7 +39,7 @@ bool preciceAdapter::Adapter::configFileRead()
                 IOobject::NO_WRITE));
 
         // Read and display the preCICE configuration file name
-        preciceConfigFilename_ = word(preciceDict.lookup("preciceConfig"));
+        preciceConfigFilename_ = "../precice-config.xml"; //word(preciceDict.lookup("preciceConfig"));
         DEBUG(adapterInfo("  precice-config-file : " + preciceConfigFilename_));
 
         // Read and display the participant name
@@ -264,8 +265,8 @@ void preciceAdapter::Adapter::configure()
         // Construct preCICE
         SETUP_TIMER();
         DEBUG(adapterInfo("Creating the preCICE solver interface..."));
-        DEBUG(adapterInfo("  Number of processes: " + std::to_string(Pstream::nProcs())));
-        DEBUG(adapterInfo("  MPI rank: " + std::to_string(Pstream::myProcNo())));
+        DEBUG(adapterInfo("  Number of processes: " + std::to_string(Pstream::nProcs()))); // + " " + typeid(Pstream::nProcs()).name()));
+        DEBUG(adapterInfo("  MPI rank: " + std::to_string(Pstream::myProcNo()))); // + " " + typeid(Pstream::myProcNo()).name()) );
         precice_ = new precice::Participant(participantName_, preciceConfigFilename_, Pstream::myProcNo(), Pstream::nProcs());
         DEBUG(adapterInfo("  preCICE solver interface was created."));
 
