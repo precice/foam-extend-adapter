@@ -21,6 +21,8 @@ jobs:
     runs-on: ubuntu-22.04
     container: ghcr.io/hoehnp/openfoam-adapter:precice-foam-extend-4.1
     steps:
+    - name: Who am I
+      run: whoami
     - name: Check out repository
       run: git clone https://github.com/precice/foam-extend-adapter foam-extend-adapter
     - name: Check out branch
