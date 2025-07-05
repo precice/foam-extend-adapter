@@ -14,13 +14,14 @@ WORKDIR /home/foamuser
 RUN mkdir foam
 
 WORKDIR /home/foamuser/foam
-RUN git clone git://git.code.sf.net/p/foam-extend/foam-extend-5.0 foam-extend-5.0
+RUN git clone git://git.code.sf.net/p/foam-extend/foam-extend-5.0 foam-extend-5.1
 
-WORKDIR /home/foamuser/foam/foam-extend-5.0
+WORKDIR /home/foamuser/foam/foam-extend-5.1
+RUN git checkout nextRelease
 RUN sed -i -e 's=rpmbuild --define=rpmbuild --define "_build_id_links none" --define=' ThirdParty/tools/makeThirdPartyFunctionsForRPM
 RUN bash -c "source etc/bashrc;  ./Allwmake.firstInstall"
 
-RUN echo "alias fe50='source \$HOME/foam/foam-extend-5.0/etc/bashrc'" >> $HOME/.bashrc
+RUN echo "alias fe51='source \$HOME/foam/foam-extend-5.0/etc/bashrc'" >> $HOME/.bashrc
 
 WORKDIR /home/foamuser
 RUN git clone https://github.com/precice/tutorials
