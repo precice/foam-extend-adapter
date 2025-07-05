@@ -19,15 +19,43 @@ on:
       - 'CONTRIBUTING.md'
       - 'README.md'
 jobs:
-  build:
-    runs-on: ubuntu-22.04
-    container: precice/precice:nightly
+  build-fe40:
+    runs-on: ubuntu-20.04
+    container: ghcr.io/hoehnp/openfoam-adapter:precice-foam-extend-4.0
     steps:
     - name: Check out repository
       uses: actions/checkout@v4
-    - name: Set up OpenFOAM
-      uses: gerlero/setup-openfoam@v1
       with:
-        openfoam-version: 2406
+        ref: foam-extend-4.0
+    - name: Build OpenFOAM-preCICE adapter
+      run: ./Allwmake
+  build-fe41:
+    runs-on: ubuntu-22.04
+    container: ghcr.io/hoehnp/openfoam-adapter:precice-foam-extend-4.1
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+      with:
+        ref: foam-extend-4.1
+    - name: Build OpenFOAM-preCICE adapter
+      run: ./Allwmake
+  build-fe50:
+    runs-on: ubuntu-22.04
+    container: ghcr.io/hoehnp/openfoam-adapter:precice-foam-extend-5.0
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+      with:
+        ref: foam-extend-5.0
+    - name: Build OpenFOAM-preCICE adapter
+      run: ./Allwmake
+  build-fedev:
+    runs-on: ubuntu-22.04
+    container: ghcr.io/hoehnp/openfoam-adapter:precice-foam-extend-dev
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+      with:
+        ref: foam-extend-5.1
     - name: Build OpenFOAM-preCICE adapter
       run: ./Allwmake
