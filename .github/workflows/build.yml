@@ -1,8 +1,6 @@
-name: Build with OpenFOAM v2406
+name: Build with foam-extend-4.1
 on:
   push:
-    branches-ignore:
-      - 'OpenFOAM*'
     paths-ignore:
       - 'docs/**'
       - 'tools/**'
@@ -24,8 +22,8 @@ jobs:
     container: ghcr.io/hoehnp/openfoam-adapter:precice-foam-extend-4.1
     steps:
     - name: Check out repository
-      uses: actions/checkout@v4
-      with:
-        ref: foam-extend-4.1
+      run: git clone https://github.com/precice/foam-extend-adapter $GITHUB_WORKSPACE/foam-extend-adapter
+    - name: Check out branch
+      run: git checkout foam-extend-4.1
     - name: Build OpenFOAM-preCICE adapter
       run: ./Allwmake
