@@ -44,7 +44,8 @@ RUN sed -i -e 's,http://glaros.dtc.umn.edu/gkhome/fetch/sw/parmetis/,https://ftp
 RUN bash -c "source etc/bashrc; LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH ./Allwmake.firstInstall"
 
 WORKDIR /home/foamuser
-RUN git clone https://github.com/precice/tutorials
+RUN git clone https://github.com/hoehnp/tutorials
 WORKDIR /home/foamuser/tutorials/quickstart/solid-cpp
+RUN git checkout add_foam_extend_tutorial
 RUN bash -c "cmake . ; make" 
 

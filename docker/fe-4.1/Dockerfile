@@ -29,7 +29,8 @@ RUN sed -i -e 's/g++/\$(WM_CXX)/' wmake/rules/linux64Gcc/c++
 RUN bash -c 'source etc/bashrc; ./Allwmake.firstInstall'
 
 WORKDIR /home/foamuser
-RUN git clone https://github.com/precice/tutorials
+RUN git clone https://github.com/hoehnp/tutorials
 WORKDIR /home/foamuser/tutorials/quickstart/solid-cpp
+RUN git checkout add_foam_extend_tutorial
 RUN bash -c "cmake . ; make" 
 
