@@ -8,3 +8,12 @@ git clone . ../adapter
 cd ../adapter
 git checkout foam-extend-4.1
 ./Allwmake
+
+cd /home/foamuser/tutorials/quickstart
+rm -rf precice-run
+cd solid-cpp
+cmake .
+make
+./rigid-body-solver &
+cd ../fluid-foam-extend
+pimpleDyMFoam

@@ -24,7 +24,8 @@ RUN bash -c "source etc/bashrc;  ./Allwmake.firstInstall"
 RUN echo "alias fe51='source \$HOME/foam/foam-extend-5.0/etc/bashrc'" >> $HOME/.bashrc
 
 WORKDIR /home/foamuser
-RUN git clone https://github.com/precice/tutorials
+RUN git clone https://github.com/hoehnp/tutorials
 WORKDIR /home/foamuser/tutorials/quickstart/solid-cpp
+RUN git checkout add_foam_extend_tutorial
 RUN bash -c "cmake . ; make" 
 
