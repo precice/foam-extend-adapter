@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #for version in 4.0 4.1 5.0 dev
-for version in dev
+for version in 4.1
 do
 	echo "building versioni fe-$version"
 	cd fe-$version
