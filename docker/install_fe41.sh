@@ -14,6 +14,8 @@ rm -rf precice-run
 cd solid-cpp
 cmake .
 make
-./rigid-body-solver &
+
+./rigid_body_solver &
 cd ../fluid-foam-extend
+blockMesh
 pimpleDyMFoam
