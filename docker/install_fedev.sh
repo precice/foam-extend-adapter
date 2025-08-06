@@ -1,4 +1,4 @@
-!/bin/bash 
+#!/bin/bash 
 
 source /home/foamuser/foam/foam-extend-5.1/etc/bashrc
 
