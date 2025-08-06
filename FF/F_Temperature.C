@@ -1,4 +1,4 @@
-#include "Temperature.H"
+#include "F_Temperature.H"
 
 using namespace Foam;
 
@@ -20,15 +20,15 @@ std::size_t preciceAdapter::FF::Temperature::write(double* buffer, bool meshConn
     for (uint j = 0; j < patchIDs_.size(); j++)
     {
         int patchID = patchIDs_.at(j);
-        scalarField gradientPatch((T_->boundaryFieldRef()[patchID])
+        scalarField gradientPatch((T_->boundaryField()[patchID])
                                       .snGrad());
 
         // For every cell of the patch
-        forAll(T_->boundaryFieldRef()[patchID], i)
+        forAll(T_->boundaryField()[patchID], i)
         {
             // Copy the pressure into the buffer
             buffer[bufferIndex++] =
-                T_->boundaryFieldRef()[patchID][i];
+                T_->boundaryField()[patchID][i];
         }
     }
     return bufferIndex;
@@ -43,9 +43,9 @@ void preciceAdapter::FF::Temperature::read(double* buffer, const unsigned int di
     {
         int patchID = patchIDs_.at(j);
         // For every cell of the patch
-        forAll(T_->boundaryFieldRef()[patchID], i)
+        forAll(T_->boundaryField()[patchID], i)
         {
-            T_->boundaryFieldRef()[patchID][i] = buffer[bufferIndex++];
+            T_->boundaryField()[patchID][i] = buffer[bufferIndex++];
         }
     }
 }

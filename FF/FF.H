@@ -5,7 +5,7 @@
 
 #include "FF/Velocity.H"
 #include "FF/Pressure.H"
-#include "FF/Temperature.H"
+#include "FF/F_Temperature.H"
 #include "FF/Alpha.H"
 #include "FF/PressureGradient.H"
 #include "FF/VelocityGradient.H"
