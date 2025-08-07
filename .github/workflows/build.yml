@@ -21,8 +21,6 @@ jobs:
     runs-on: ubuntu-22.04
     container: ghcr.io/hoehnp/openfoam-adapter:precice-foam-extend-4.1
     steps:
-    - name: Use Docker in rootless mode.
-      uses: ScribeMD/rootless-docker@0.2.2
     - name: Check out repository
       run: git clone https://github.com/precice/foam-extend-adapter foam-extend-adapter
     - name: Check out branch
