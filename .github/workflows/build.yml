@@ -26,4 +26,4 @@ jobs:
     - name: Check out branch
       run: cd /tmp/foam-extend-adapter; git checkout foam-extend-4.1
     - name: Build OpenFOAM-preCICE adapter
-      run: source /home/foamuser/foam/foam-extend-4.1/etc/bash; cd /tmp/foam-extend-adapter; ./Allwmake
+      run: . /home/foamuser/foam/foam-extend-4.1/etc/bash; cd /tmp/foam-extend-adapter; ./Allwmake
