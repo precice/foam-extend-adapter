@@ -7,8 +7,8 @@ preciceAdapter::FF::Pressure::Pressure(
     const Foam::fvMesh& mesh,
     const std::string nameP)
 : p_(
-    const_cast<volScalarField*>(
-        &mesh.lookupObject<volScalarField>(nameP)))
+      const_cast<volScalarField*>(
+          &mesh.lookupObject<volScalarField>(nameP)))
 {
     dataType_ = scalar;
 }

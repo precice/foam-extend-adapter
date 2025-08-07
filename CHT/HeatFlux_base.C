@@ -11,8 +11,8 @@ preciceAdapter::CHT::HeatFlux::HeatFlux(
     const Foam::fvMesh& mesh,
     const std::string nameT)
 : T_(
-    const_cast<volScalarField*>(
-        &mesh.lookupObject<volScalarField>(nameT))),
+      const_cast<volScalarField*>(
+          &mesh.lookupObject<volScalarField>(nameT))),
   mesh_(mesh)
 {
     dataType_ = scalar;
@@ -37,12 +37,12 @@ std::size_t preciceAdapter::CHT::HeatFlux::write(double* buffer, bool meshConnec
         // If we use the mesh connectivity, we interpolate from the centres to the nodes
         if (meshConnectivity)
         {
-            //Setup Interpolation object
+            // Setup Interpolation object
             primitivePatchInterpolation patchInterpolator(mesh_.boundaryMesh()[patchID]);
 
             scalarField gradientPoints;
 
-            //Interpolate
+            // Interpolate
             gradientPoints = patchInterpolator.faceToPointInterpolate(gradientPatch);
 
             // For every cell of the patch
@@ -50,7 +50,7 @@ std::size_t preciceAdapter::CHT::HeatFlux::write(double* buffer, bool meshConnec
             {
                 // Copy the heat flux into the buffer
                 // Q = - k * gradient(T)
-                //TODO: Interpolate kappa in case of a turbulent calculation
+                // TODO: Interpolate kappa in case of a turbulent calculation
                 buffer[bufferIndex++] =
                     -getKappaEffAt(i) * gradientPoints[i];
             }
@@ -62,7 +62,7 @@ std::size_t preciceAdapter::CHT::HeatFlux::write(double* buffer, bool meshConnec
             {
                 // Copy the heat flux into the buffer
                 // Q = - k * gradient(T)
-                //TODO: Interpolate kappa in case of a turbulent calculation
+                // TODO: Interpolate kappa in case of a turbulent calculation
                 buffer[bufferIndex++] =
                     -getKappaEffAt(i) * gradientPatch[i];
             }
@@ -87,8 +87,7 @@ void preciceAdapter::CHT::HeatFlux::read(double* buffer, const unsigned int dim)
         // Get the temperature gradient boundary patch
         scalarField& gradientPatch(
             refCast<fixedGradientFvPatchField<Foam::scalar>>(
-                T_->boundaryField()[patchID])
-                );
+                T_->boundaryField()[patchID]));
 
         // For every cell of the patch
         forAll(gradientPatch, i)

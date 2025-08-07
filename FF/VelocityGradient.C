@@ -7,8 +7,8 @@ preciceAdapter::FF::VelocityGradient::VelocityGradient(
     const Foam::fvMesh& mesh,
     const std::string nameU)
 : U_(
-    const_cast<volVectorField*>(
-        &mesh.lookupObject<volVectorField>(nameU)))
+      const_cast<volVectorField*>(
+          &mesh.lookupObject<volVectorField>(nameU)))
 {
     dataType_ = vector;
 }

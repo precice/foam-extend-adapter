@@ -12,8 +12,8 @@ preciceAdapter::CHT::HeatTransferCoefficient::HeatTransferCoefficient(
     const Foam::fvMesh& mesh,
     const std::string nameT)
 : T_(
-    const_cast<volScalarField*>(
-        &mesh.lookupObject<volScalarField>(nameT))),
+      const_cast<volScalarField*>(
+          &mesh.lookupObject<volScalarField>(nameT))),
   mesh_(mesh)
 {
     dataType_ = scalar;
@@ -36,15 +36,15 @@ std::size_t preciceAdapter::CHT::HeatTransferCoefficient::write(double* buffer, 
         const scalarField& delta(
             mesh_.boundary()[patchID].deltaCoeffs());
 
-        //If we use the mesh connectivity, we interpolate from the centres to the nodes
+        // If we use the mesh connectivity, we interpolate from the centres to the nodes
         if (meshConnectivity)
         {
-            //Setup Interpolation object
+            // Setup Interpolation object
             primitivePatchInterpolation patchInterpolator(mesh_.boundaryMesh()[patchID]);
 
             scalarField deltaPoints;
 
-            //Interpolate
+            // Interpolate
             deltaPoints = patchInterpolator.faceToPointInterpolate(delta);
 
             // For all the cells on the patch

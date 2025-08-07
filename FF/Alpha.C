@@ -6,8 +6,8 @@ preciceAdapter::FF::Alpha::Alpha(
     const Foam::fvMesh& mesh,
     const std::string nameAlpha)
 : Alpha_(
-    const_cast<volScalarField*>(
-        &mesh.lookupObject<volScalarField>(nameAlpha)))
+      const_cast<volScalarField*>(
+          &mesh.lookupObject<volScalarField>(nameAlpha)))
 {
     dataType_ = scalar;
 }

@@ -7,8 +7,8 @@ preciceAdapter::FSI::DisplacementDelta::DisplacementDelta(
     const std::string namePointDisplacement,
     const std::string nameCellDisplacement)
 : pointDisplacement_(
-    const_cast<pointVectorField*>(
-        &mesh.lookupObject<pointVectorField>(namePointDisplacement))),
+      const_cast<pointVectorField*>(
+          &mesh.lookupObject<pointVectorField>(namePointDisplacement))),
   cellDisplacement_(
       const_cast<volVectorField*>(
           &mesh.lookupObject<volVectorField>(nameCellDisplacement))),

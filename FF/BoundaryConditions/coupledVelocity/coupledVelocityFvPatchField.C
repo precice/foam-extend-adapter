@@ -102,7 +102,6 @@ void Foam::coupledVelocityFvPatchField::updateCoeffs()
     if (t - t0 == 1)
     {
         this->valueFraction() = 1 - pos(refValue_ & n);
-
     }
     else
     {

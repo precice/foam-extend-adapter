@@ -33,4 +33,3 @@ scalar preciceAdapter::CHT::HeatTransferCoefficient_Compressible::
 {
     return Kappa_->getAt(i);
 }
-
