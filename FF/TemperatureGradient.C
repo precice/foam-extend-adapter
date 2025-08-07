@@ -8,8 +8,8 @@ preciceAdapter::FF::TemperatureGradient::TemperatureGradient(
     const Foam::fvMesh& mesh,
     const std::string nameT)
 : T_(
-      const_cast<volScalarField*>(
-          &mesh.lookupObject<volScalarField>(nameT)))
+    const_cast<volScalarField*>(
+        &mesh.lookupObject<volScalarField>(nameT)))
 {
     dataType_ = scalar;
 }

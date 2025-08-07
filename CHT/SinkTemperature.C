@@ -7,8 +7,8 @@ preciceAdapter::CHT::SinkTemperature::SinkTemperature(
     const Foam::fvMesh& mesh,
     const std::string nameT)
 : T_(
-      const_cast<volScalarField*>(
-          &mesh.lookupObject<volScalarField>(nameT))),
+    const_cast<volScalarField*>(
+        &mesh.lookupObject<volScalarField>(nameT))),
   mesh_(mesh)
 {
     dataType_ = scalar;

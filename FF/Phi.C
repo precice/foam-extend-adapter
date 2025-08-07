@@ -6,8 +6,8 @@ preciceAdapter::FF::Phi::Phi(
     const Foam::fvMesh& mesh,
     const std::string namePhi)
 : phi_(
-      const_cast<surfaceScalarField*>(
-          &mesh.lookupObject<surfaceScalarField>(namePhi)))
+    const_cast<surfaceScalarField*>(
+        &mesh.lookupObject<surfaceScalarField>(namePhi)))
 {
     dataType_ = scalar;
 }
