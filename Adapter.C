@@ -1,8 +1,7 @@
-#define ADAPTER_DEBUG_MODE 1
 #include "Adapter.H"
 #include "Interface.H"
 #include "Utilities.H"
-#include <typeinfo>
+
 #include "IOstreams.H"
 
 using namespace Foam;
@@ -84,14 +83,14 @@ bool preciceAdapter::Adapter::configFileRead()
             return false;
         }
         else
-        {   
-	    wordList entries = interfaceDictPtr->toc();
+        {
+            wordList entries = interfaceDictPtr->toc();
 
-            forAll  (entries, i)
+            forAll(entries, i)
             {
-                if (interfaceDictPtr->lookupEntryPtr(entries[i],false,false)->isDict())
+                if (interfaceDictPtr->lookupEntryPtr(entries[i], false, false)->isDict())
                 {
-                    const dictionary& interfaceDict = interfaceDictPtr->lookupEntryPtr(entries[i],false,false)->dict();
+                    const dictionary& interfaceDict = interfaceDictPtr->lookupEntryPtr(entries[i], false, false)->dict();
                     struct InterfaceConfig interfaceConfig;
 
                     interfaceConfig.meshName = word(interfaceDict.lookup("mesh"));
@@ -265,8 +264,8 @@ void preciceAdapter::Adapter::configure()
         // Construct preCICE
         SETUP_TIMER();
         DEBUG(adapterInfo("Creating the preCICE solver interface..."));
-        DEBUG(adapterInfo("  Number of processes: " + std::to_string(Pstream::nProcs()))); // + " " + typeid(Pstream::nProcs()).name()));
-        DEBUG(adapterInfo("  MPI rank: " + std::to_string(Pstream::myProcNo()))); // + " " + typeid(Pstream::myProcNo()).name()) );
+        DEBUG(adapterInfo("  Number of processes: " + std::to_string(Pstream::nProcs())));
+        DEBUG(adapterInfo("  MPI rank: " + std::to_string(Pstream::myProcNo())));
         precice_ = new precice::Participant(participantName_, preciceConfigFilename_, Pstream::myProcNo(), Pstream::nProcs());
         DEBUG(adapterInfo("  preCICE solver interface was created."));
 
