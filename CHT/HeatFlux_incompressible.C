@@ -33,4 +33,3 @@ scalar preciceAdapter::CHT::HeatFlux_Incompressible::getKappaEffAt(int i)
 {
     return Kappa_->getAt(i);
 }
-

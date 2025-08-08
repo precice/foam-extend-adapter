@@ -37,7 +37,7 @@ std::string Foam::clockValue::str() const
 
     // seconds
     const unsigned long ss =
-         std::chrono::duration_cast<std::chrono::seconds>(value_).count();
+        std::chrono::duration_cast<std::chrono::seconds>(value_).count();
 
     // days
     const auto dd = (ss / 86400);
@@ -49,28 +49,22 @@ std::string Foam::clockValue::str() const
 
     if (dd || hh)
     {
-        os  << std::setw(2) << std::setfill('0')
-            << hh << ':';
+        os << std::setw(2) << std::setfill('0') << hh << ':';
     }
 
     // minutes
-    os  << std::setw(2) << std::setfill('0')
-        << ((ss / 60) % 60) << ':';
+    os << std::setw(2) << std::setfill('0') << ((ss / 60) % 60) << ':';
 
     // seconds
-    os  << std::setw(2) << std::setfill('0')
-        << (ss % 60);
+    os << std::setw(2) << std::setfill('0') << (ss % 60);
 
     // milliseconds. As none or 3 decimal places
-    const long ms =
-    (
-        std::chrono::duration_cast<std::chrono::milliseconds>(value_).count()
-      - (ss * 1000)
-    );
+    const long ms = (std::chrono::duration_cast<std::chrono::milliseconds>(value_).count()
+                     - (ss * 1000));
 
     if (ms > 0)
     {
-        os  << '.' << std::setw(3) << std::setfill('0') << ms;
+        os << '.' << std::setw(3) << std::setfill('0') << ms;
     }
 
     return os.str();

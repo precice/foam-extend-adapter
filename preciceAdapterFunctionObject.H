@@ -128,7 +128,7 @@ public:
 
     //- Execute in the beginning of each time-loop, after the first one
     virtual bool execute() final;
-    
+
     //- Execute in the beginning of each time-loop, after the first one
     virtual bool execute(const bool forceWrite) final;
 
@@ -141,7 +141,7 @@ public:
     //- Called at the end of Time::adjustDeltaT() if adjustTime is true
     virtual bool adjustTimeStep() final;
 
-    
+
     // NOTE: If you add a new module that needs to execute methods
     // whenever the mesh is updated or its points moved,
     // you may put your calls inside the following methods.
@@ -151,7 +151,6 @@ public:
 
     // Update for changes of mesh
     void movePoints(const pointField& mesh);
-    
 };
 
 

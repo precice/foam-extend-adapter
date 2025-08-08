@@ -4,7 +4,7 @@
 #include "KappaEffective_base.H"
 #include "incompressible/turbulenceModel/lnInclude/turbulenceModel.H"
 #include "volMesh.H"
-#include "volFieldsFwd.H" 
+#include "volFieldsFwd.H"
 
 namespace preciceAdapter
 {
@@ -37,7 +37,7 @@ protected:
 
     //- Name of the turbulent thermal diffusivity field
     const std::string nameAlphat_;
-    
+
     //- Prandtl number
     Foam::dimensionedScalar Pr_;
 

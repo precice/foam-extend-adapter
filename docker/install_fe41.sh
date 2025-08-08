@@ -20,3 +20,5 @@ make
 cd ../fluid-foam-extend || exit
 blockMesh
 pimpleDyMFoam
+
+exit 0

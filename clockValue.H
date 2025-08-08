@@ -53,80 +53,78 @@ namespace Foam
 
 class clockValue
 {
-public:
 
+public:
     // Public Types
 
-        //- Time structure used
-        typedef std::chrono::high_resolution_clock::duration value_type;
+    //- Time structure used
+    typedef std::chrono::high_resolution_clock::duration value_type;
 
 
 private:
-
     // Private Data
 
-        //- The time start point or the time duration.
-        value_type value_;
+    //- The time start point or the time duration.
+    value_type value_;
 
 
 public:
-
     // Constructors
 
-        //- Construct zero initialized
-        inline clockValue();
+    //- Construct zero initialized
+    inline clockValue();
 
-        //- Construct with current time.
-        //  The bool is for tagged dispatch only (its value is ignored).
-        inline explicit clockValue(bool);
+    //- Construct with current time.
+    //  The bool is for tagged dispatch only (its value is ignored).
+    inline explicit clockValue(bool);
 
-        //- Copy construct from duration with the same clock base
-        inline explicit clockValue(const value_type& value);
+    //- Copy construct from duration with the same clock base
+    inline explicit clockValue(const value_type& value);
 
 
     // Factory Methods
 
-        //- The current clock value from the system
-        inline static clockValue now();
+    //- The current clock value from the system
+    inline static clockValue now();
 
 
     // Member Functions
 
-        //- The time duration
-        inline const value_type& value() const
-        {
-            return value_;
-        }
+    //- The time duration
+    inline const value_type& value() const
+    {
+        return value_;
+    }
 
-        //- Reset to zero
-        inline void clear();
+    //- Reset to zero
+    inline void clear();
 
-        //- Update to the current now() time from the system
-        inline void update();
+    //- Update to the current now() time from the system
+    inline void update();
 
-        //- The value in seconds (rounded)
-        inline long seconds() const;
+    //- The value in seconds (rounded)
+    inline long seconds() const;
 
-        //- The time duration elapsed until now() since the start point
-        inline clockValue elapsed() const;
+    //- The time duration elapsed until now() since the start point
+    inline clockValue elapsed() const;
 
-        //- The time elapsed [seconds] until now() since the start point
-        inline double elapsedTime() const;
+    //- The time elapsed [seconds] until now() since the start point
+    inline double elapsedTime() const;
 
-        //- Format as day-hh:mm:ss string
-        std::string str() const;
+    //- Format as day-hh:mm:ss string
+    std::string str() const;
 
 
     // Operators
 
-        //- Conversion operator to seconds in floating point
-        inline operator double() const;
+    //- Conversion operator to seconds in floating point
+    inline operator double() const;
 
-        //- Subtract clock value
-        inline clockValue& operator-=(const clockValue& rhs);
+    //- Subtract clock value
+    inline clockValue& operator-=(const clockValue& rhs);
 
-        //- Add clock value
-        inline clockValue& operator+=(const clockValue& rhs);
+    //- Add clock value
+    inline clockValue& operator+=(const clockValue& rhs);
 };
 
 

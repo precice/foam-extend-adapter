@@ -51,7 +51,7 @@ protected:
     //- Vector of CouplingDataWriters
     std::vector<CouplingDataUser*> couplingDataWriters_;
 
-    //Switch for faceTriangulation (nearest projection)
+    // Switch for faceTriangulation (nearest projection)
     bool meshConnectivity_;
 
     //- Reset the displacement during interface definition

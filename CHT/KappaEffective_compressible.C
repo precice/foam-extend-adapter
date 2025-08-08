@@ -20,17 +20,17 @@ void preciceAdapter::CHT::KappaEff_Compressible::extract(uint patchID, bool mesh
 {
     if (meshConnectivity)
     {
-        //Create an Interpolation object at the boundary Field
+        // Create an Interpolation object at the boundary Field
         primitivePatchInterpolation patchInterpolator(mesh_.boundaryMesh()[patchID]);
 
-        //Interpolate kappaEff_ from centers to nodes
-            const basicThermo& thermo = mesh_.time().db().lookupObject<basicThermo>("thermophysicalProperties");
-             kappaEff_ = patchInterpolator.faceToPointInterpolate(turbulence_.alphaEff()().boundaryField()[patchID] * thermo.Cp()().boundaryField()[patchID]);
+        // Interpolate kappaEff_ from centers to nodes
+        const basicThermo& thermo = mesh_.time().db().lookupObject<basicThermo>("thermophysicalProperties");
+        kappaEff_ = patchInterpolator.faceToPointInterpolate(turbulence_.alphaEff()().boundaryField()[patchID] * thermo.Cp()().boundaryField()[patchID]);
     }
     else
     {
-            const basicThermo& thermo = mesh_.time().db().lookupObject<basicThermo>("thermophysicalProperties");
-             kappaEff_ = turbulence_.alphaEff()().boundaryField()[patchID] * thermo.Cp()().boundaryField()[patchID];
+        const basicThermo& thermo = mesh_.time().db().lookupObject<basicThermo>("thermophysicalProperties");
+        kappaEff_ = turbulence_.alphaEff()().boundaryField()[patchID] * thermo.Cp()().boundaryField()[patchID];
     }
 }
 
@@ -38,5 +38,3 @@ scalar preciceAdapter::CHT::KappaEff_Compressible::getAt(int i)
 {
     return kappaEff_[i];
 }
-
-

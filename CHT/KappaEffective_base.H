@@ -20,7 +20,7 @@ protected:
 
     //- Name of the user-provided conductivity (in the preciceDict)
     const std::string nameKappa_;
-    
+
     //- Effective conductivity (the same for each cell)
     Foam::dimensionedScalar kappaEff_;
 

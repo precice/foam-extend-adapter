@@ -23,39 +23,39 @@ License
 
 \*---------------------------------------------------------------------------*/
 
-template <class T>
+template<class T>
 inline const T& Foam::NullObjectRef()
 {
     return *reinterpret_cast<const T*>(nullObjectPtr);
 }
 
-template <class T>
+template<class T>
 inline const T* Foam::NullObjectPtr()
 {
     return reinterpret_cast<const T*>(nullObjectPtr);
 }
 
 
-template <class T>
+template<class T>
 inline bool Foam::isNull(const T& t)
 {
     return &t == NullObjectPtr<T>();
 }
 
-template <class T>
+template<class T>
 inline bool Foam::notNull(const T& t)
 {
     return &t != NullObjectPtr<T>();
 }
 
 
-template <class T>
+template<class T>
 inline bool Foam::isNull(const T* t)
 {
     return t == NullObjectPtr<T>();
 }
 
-template <class T>
+template<class T>
 inline bool Foam::notNull(const T* t)
 {
     return t != NullObjectPtr<T>();

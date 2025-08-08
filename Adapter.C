@@ -616,8 +616,8 @@ void preciceAdapter::Adapter::adjustSolverTimeStepAndReadData()
         if (!useStoredTimestep_)
         {
             // Show a warning if runTimeModifiable is set
-	    Switch runTimeModifiable_(false);
-	    runTime_.controlDict().readIfPresent("runTimeModifiable", runTimeModifiable_);
+            Switch runTimeModifiable_(false);
+            runTime_.controlDict().readIfPresent("runTimeModifiable", runTimeModifiable_);
 
             if (runTimeModifiable_)
             {
@@ -902,7 +902,7 @@ void preciceAdapter::Adapter::setupCheckpointing()
 #undef doLocalCode
 #define doLocalCode(GeomField)                                           \
     /* Checkpoint registered GeomField objects */                        \
-    for (const word& obj : mesh_.names("GeomField"))               \
+    for (const word& obj : mesh_.names("GeomField"))                     \
     {                                                                    \
         addCheckpointField(mesh_.thisDb().lookupObject<GeomField>(obj)); \
         DEBUG(adapterInfo("Checkpoint " + obj + " : " #GeomField));      \
