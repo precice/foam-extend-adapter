@@ -26,4 +26,4 @@ jobs:
     - name: Check out branch
       run: cd /tmp/foam-extend-adapter; git checkout foam-extend-5.1
     - name: Build OpenFOAM-preCICE adapter
-      run: cd /tmp/foam-extend-adapter/docker; ./test-fedev.sh
+      run: cd /tmp/foam-extend-adapter/docker; ./test_fedev.sh
