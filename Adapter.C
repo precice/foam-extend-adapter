@@ -616,7 +616,10 @@ void preciceAdapter::Adapter::adjustSolverTimeStepAndReadData()
         if (!useStoredTimestep_)
         {
             // Show a warning if runTimeModifiable is set
-            if (runTime_.runTimeModifiable())
+	    Switch runTimeModifiable_(false);
+	    runTime_.controlDict().readIfPresent("runTimeModifiable", runTimeModifiable_);
+
+            if (runTimeModifiable_)
             {
                 adapterInfo(
                     "You have enabled 'runTimeModifiable' in the "
