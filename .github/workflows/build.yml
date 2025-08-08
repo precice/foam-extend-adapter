@@ -21,8 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     container: mgoltzsche/podman:5.5.2-minimal
     steps:
-    - name: Install git
-      run: apk add git
+    - name: Install git and bash
+      run: apk add git bash
     - name: Check out repository
       run: cd /tmp; git clone https://github.com/precice/foam-extend-adapter foam-extend-adapter
     - name: Check out branch
