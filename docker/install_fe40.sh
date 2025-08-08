@@ -11,6 +11,7 @@ git checkout foam-extend-4.0
 LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH ./Allwmake
 
 cd /home/foamuser/tutorials/quickstart || exit
+git pull 
 rm -rf precice-run
 cd solid-cpp || exit
 LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH cmake .
