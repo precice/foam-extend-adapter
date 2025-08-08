@@ -1,8 +1,6 @@
-name: Build with OpenFOAM v2406
+name: Build with foam-extend-4.0
 on:
   push:
-    branches-ignore:
-      - 'OpenFOAM*'
     paths-ignore:
       - 'docs/**'
       - 'tools/**'
@@ -19,15 +17,13 @@ on:
       - 'CONTRIBUTING.md'
       - 'README.md'
 jobs:
-  build:
-    runs-on: ubuntu-22.04
-    container: precice/precice:nightly
+  build-fe40:
+    runs-on: ubuntu-latest
     steps:
+    - uses: gacts/install-podman@v1
     - name: Check out repository
-      uses: actions/checkout@v4
-    - name: Set up OpenFOAM
-      uses: gerlero/setup-openfoam@v1
-      with:
-        openfoam-version: 2406
+      run: cd /tmp; git clone https://github.com/precice/foam-extend-adapter foam-extend-adapter
+    - name: Check out branch
+      run: cd /tmp/foam-extend-adapter; git checkout foam-extend-4.0
     - name: Build OpenFOAM-preCICE adapter
-      run: ./Allwmake
+      run: cd /tmp/foam-extend-adapter/docker; ./test_fe40.sh
