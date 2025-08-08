@@ -19,13 +19,11 @@ on:
 jobs:
   build-fe41:
     runs-on: ubuntu-latest
-    container: mgoltzsche/podman:5.5.2-minimal
     steps:
-    - name: Install git and bash
-      run: apk add git bash
+    - uses: gacts/install-podman@v1
     - name: Check out repository
       run: cd /tmp; git clone https://github.com/precice/foam-extend-adapter foam-extend-adapter
     - name: Check out branch
       run: cd /tmp/foam-extend-adapter; git checkout foam-extend-4.1
     - name: Build OpenFOAM-preCICE adapter
-      run: cd /tmp/foam-extend-adapter/docker; bash -c ./test_fe41.sh
+      run: cd /tmp/foam-extend-adapter/docker; ./test_fe41.sh
