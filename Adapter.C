@@ -38,7 +38,7 @@ bool preciceAdapter::Adapter::configFileRead()
                 IOobject::NO_WRITE));
 
         // Read and display the preCICE configuration file name
-        preciceConfigFilename_ = word(preciceDict.lookup("preciceConfig"));
+        preciceConfigFilename_ = word(preciceDict.lookup("preciceConfig"), false);
         DEBUG(adapterInfo("  precice-config-file : " + preciceConfigFilename_));
 
         // Read and display the participant name
