@@ -18,7 +18,6 @@ on:
       - 'README.md'
 jobs:
   build-fe41:
-    runs-on: linux
     container: mgoltzsche/podman:5.5.2-minimal
     steps:
     - name: Check out repository
