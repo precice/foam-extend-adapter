@@ -77,7 +77,7 @@ Foam::tmp<Foam::volScalarField> preciceAdapter::FSI::ForceBase::rho() const
                 "preciceDict",
                 mesh_.time().system(),
                 mesh_,
-                IOobject::MUST_READ_IF_MODIFIED,
+                IOobject::MUST_READ,
                 IOobject::NO_WRITE));
         const dictionary& FSIDict =
             preciceDict.subOrEmptyDict("FSI");
@@ -124,7 +124,7 @@ Foam::tmp<Foam::volScalarField> preciceAdapter::FSI::ForceBase::mu() const
                     "preciceDict",
                     mesh_.time().system(),
                     mesh_,
-                    IOobject::MUST_READ_IF_MODIFIED,
+                    IOobject::MUST_READ,
                     IOobject::NO_WRITE));
             const dictionary& FSIDict =
                 preciceDict.subOrEmptyDict("FSI");
