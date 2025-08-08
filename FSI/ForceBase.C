@@ -166,7 +166,15 @@ std::size_t preciceAdapter::FSI::ForceBase::writeToBuffer(double* buffer,
         trho().boundaryField();
 
     // Pressure boundary field
-    const auto& pb = mesh_.db().lookupObject<Foam::volScalarField>("p").boundaryField();
+    const Foam::volScalarField p_(
+        IOobject(
+            "p",
+            mesh_.time().timeName(),
+            mesh_,
+            IOobject::MUST_READ,
+            IOobject::AUTO_WRITE),
+        mesh_);
+    const auto& pb = p_.boundaryField();
 
     int bufferIndex = 0;
     // For every boundary patch of the interface
