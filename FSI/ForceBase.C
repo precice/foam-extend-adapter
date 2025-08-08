@@ -45,10 +45,18 @@ Foam::tmp<Foam::volSymmTensorField> preciceAdapter::FSI::ForceBase::devRhoReff()
     else
     {
         // For laminar flows get the velocity
-        const Foam::volVectorField& U(
-            mesh_.db().lookupObject<volVectorField>("U"));
+        // const Foam::volVectorField& U(
+        //    mesh_.thisDb().lookupObject<volVectorField>("U"));
+        const Foam::volVectorField U_(
+            IOobject(
+                "U",
+                mesh_.time().timeName(),
+                mesh_,
+                IOobject::MUST_READ,
+                IOobject::NO_WRITE),
+            mesh_);
 
-        return -mu() * dev(twoSymm(fvc::grad(U)));
+        return -mu() * dev(twoSymm(fvc::grad(U_)));
     }
 }
 
@@ -64,8 +72,15 @@ Foam::tmp<Foam::volScalarField> preciceAdapter::FSI::ForceBase::rho() const
     }
     else if (solverType_.compare("incompressible") == 0)
     {
+        static IOdictionary preciceDict(
+            IOobject(
+                "preciceDict",
+                mesh_.time().system(),
+                mesh_,
+                IOobject::MUST_READ_IF_MODIFIED,
+                IOobject::NO_WRITE));
         const dictionary& FSIDict =
-            mesh_.db().lookupObject<IOdictionary>("preciceDict").subOrEmptyDict("FSI");
+            preciceDict.subOrEmptyDict("FSI");
 
         return Foam::tmp<Foam::volScalarField>(
             new Foam::volScalarField(
@@ -104,10 +119,17 @@ Foam::tmp<Foam::volScalarField> preciceAdapter::FSI::ForceBase::mu() const
         else
         {
 
+            static IOdictionary preciceDict(
+                IOobject(
+                    "preciceDict",
+                    mesh_.time().system(),
+                    mesh_,
+                    IOobject::MUST_READ_IF_MODIFIED,
+                    IOobject::NO_WRITE));
             const dictionary& FSIDict =
-                mesh_.db().lookupObject<IOdictionary>("preciceDict").subOrEmptyDict("FSI");
+                preciceDict.subOrEmptyDict("FSI");
 
-	    Foam::dimensionedScalar nu(FSIDict.lookup("nu"));
+            Foam::dimensionedScalar nu(FSIDict.lookup("nu"));
 
             return tmp<Foam::volScalarField>(
                 new Foam::volScalarField(
