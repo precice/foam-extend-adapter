@@ -1,4 +1,5 @@
 #include "ForceBase.H"
+#include "fvCFD.H"
 
 using namespace Foam;
 
@@ -45,17 +46,16 @@ Foam::tmp<Foam::volSymmTensorField> preciceAdapter::FSI::ForceBase::devRhoReff()
     else
     {
         // For laminar flows get the velocity
-        //const Foam::volVectorField& U(
+        // const Foam::volVectorField& U(
         //    mesh_.thisDb().lookupObject<volVectorField>("U"));
-	    const Foam::volVectorField U_( 
-	    IOobject
-    (
-        "U",
-        mesh_.time().timeName(),
-        mesh_,
-        IOobject::MUST_READ,
-        IOobject::NO_WRITE
-    ), mesh_);
+        const Foam::volVectorField U_(
+            IOobject(
+                "U",
+                mesh_.time().timeName(),
+                mesh_,
+                IOobject::MUST_READ,
+                IOobject::NO_WRITE),
+            mesh_);
 
         return -mu() * dev(twoSymm(fvc::grad(U_)));
     }
@@ -120,17 +120,17 @@ Foam::tmp<Foam::volScalarField> preciceAdapter::FSI::ForceBase::mu() const
         else
         {
 
-        static IOdictionary preciceDict(
-            IOobject(
-                "preciceDict",
-                mesh_.time().system(),
-                mesh_,
-                IOobject::MUST_READ_IF_MODIFIED,
-                IOobject::NO_WRITE));
-        const dictionary& FSIDict =
-            preciceDict.subOrEmptyDict("FSI");
+            static IOdictionary preciceDict(
+                IOobject(
+                    "preciceDict",
+                    mesh_.time().system(),
+                    mesh_,
+                    IOobject::MUST_READ_IF_MODIFIED,
+                    IOobject::NO_WRITE));
+            const dictionary& FSIDict =
+                preciceDict.subOrEmptyDict("FSI");
 
-	    Foam::dimensionedScalar nu(FSIDict.lookup("nu"));
+            Foam::dimensionedScalar nu(FSIDict.lookup("nu"));
 
             return tmp<Foam::volScalarField>(
                 new Foam::volScalarField(
@@ -167,15 +167,14 @@ std::size_t preciceAdapter::FSI::ForceBase::writeToBuffer(double* buffer,
         trho().boundaryField();
 
     // Pressure boundary field
-	    const Foam::volScalarField p_( 
-	    IOobject
-    (
-        "p",
-        mesh_.time().timeName(),
-        mesh_,
-        IOobject::MUST_READ,
-        IOobject::AUTO_WRITE
-    ), mesh_);
+    const Foam::volScalarField p_(
+        IOobject(
+            "p",
+            mesh_.time().timeName(),
+            mesh_,
+            IOobject::MUST_READ,
+            IOobject::AUTO_WRITE),
+        mesh_);
     const auto& pb = p_.boundaryField();
 
     int bufferIndex = 0;

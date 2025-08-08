@@ -100,8 +100,6 @@ bool Foam::functionObjects::preciceAdapterFunctionObject::start()
     return true;
 }
 
-
-
 bool Foam::functionObjects::preciceAdapterFunctionObject::execute()
 {
 
@@ -169,12 +167,10 @@ bool Foam::functionObjects::preciceAdapterFunctionObject::adjustTimeStep()
 
 void Foam::functionObjects::preciceAdapterFunctionObject::updateMesh(const mapPolyMesh& mpm)
 {
-
 }
 
 void Foam::functionObjects::preciceAdapterFunctionObject::movePoints(const pointField& mesh)
 {
-
 }
 
 // ************************************************************************* //

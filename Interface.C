@@ -118,7 +118,7 @@ void preciceAdapter::Interface::configureMesh(const fvMesh& mesh, const std::str
         for (uint j = 0; j < patchIDs_.size(); j++)
         {
             // Get the face centers of the current patch
-		vectorField faceCenters(mesh.boundaryMesh()[patchIDs_.at(j)].faceCentres());
+            vectorField faceCenters(mesh.boundaryMesh()[patchIDs_.at(j)].faceCentres());
 
             // Move the interface according to the current values of the cellDisplacement field,
             // to account for any displacements accumulated before restarting the simulation.
@@ -139,7 +139,7 @@ void preciceAdapter::Interface::configureMesh(const fvMesh& mesh, const std::str
                 const pointField faceNodes =
                     mesh.boundaryMesh()[patchIDs_.at(j)].localPoints();
                 const auto faceNodesSize = faceNodes.size();
-                //Allocate memory for z-coordinates
+                // Allocate memory for z-coordinates
                 std::array<double, 2> z_location({0, 0});
                 constexpr unsigned int z_axis = 2;
 
@@ -292,7 +292,7 @@ void preciceAdapter::Interface::configureMesh(const fvMesh& mesh, const std::str
                     pointCoords -= resetField;
                 }
 
-                //Array to store the IDs we get from preCICE
+                // Array to store the IDs we get from preCICE
                 std::vector<int> triVertIDs;
                 triVertIDs.reserve(faceField.size() * triaPerQuad * nodesPerTria);
 
@@ -318,7 +318,7 @@ void preciceAdapter::Interface::configureMesh(const fvMesh& mesh, const std::str
 
                 DEBUG(adapterInfo("Number of triangles: " + std::to_string(faceField.size() * triaPerQuad)));
 
-                //Set Triangles
+                // Set Triangles
                 precice_.setMeshTriangles(meshName_, triVertIDs);
             }
         }
