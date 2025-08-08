@@ -83,14 +83,14 @@ bool preciceAdapter::Adapter::configFileRead()
             return false;
         }
         else
-        {   
-	    wordList entries = interfaceDictPtr->toc();
+        {
+            wordList entries = interfaceDictPtr->toc();
 
-            forAll  (entries, i)
+            forAll(entries, i)
             {
-                if (interfaceDictPtr->lookupEntryPtr(entries[i],false,false)->isDict())
+                if (interfaceDictPtr->lookupEntryPtr(entries[i], false, false)->isDict())
                 {
-                    const dictionary& interfaceDict = interfaceDictPtr->lookupEntryPtr(entries[i],false,false)->dict();
+                    const dictionary& interfaceDict = interfaceDictPtr->lookupEntryPtr(entries[i], false, false)->dict();
                     struct InterfaceConfig interfaceConfig;
 
                     interfaceConfig.meshName = word(interfaceDict.lookup("mesh"));

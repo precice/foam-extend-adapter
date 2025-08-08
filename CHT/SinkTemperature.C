@@ -30,15 +30,15 @@ std::size_t preciceAdapter::CHT::SinkTemperature::write(double* buffer, bool mes
         tmp<scalarField> patchInternalFieldTmp = TPatch.patchInternalField();
         const scalarField& patchInternalField = patchInternalFieldTmp();
 
-        //If we use the mesh connectivity, we interpolate from the centres to the nodes
+        // If we use the mesh connectivity, we interpolate from the centres to the nodes
         if (meshConnectivity)
         {
-            //Create an Interpolation object at the boundary Field
+            // Create an Interpolation object at the boundary Field
             primitivePatchInterpolation patchInterpolator(mesh_.boundaryMesh()[patchID]);
 
             scalarField patchInternalPointField;
 
-            //Interpolate from centers to nodes
+            // Interpolate from centers to nodes
             patchInternalPointField = patchInterpolator.faceToPointInterpolate(patchInternalField);
 
             // For every point on the patch

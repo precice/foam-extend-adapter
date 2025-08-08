@@ -35,7 +35,7 @@ protected:
 
     //- Name of the turbulent thermal diffusivity field
     const std::string nameAlphat_;
-    
+
     //- Prandtl number
     Foam::dimensionedScalar Pr_;
 

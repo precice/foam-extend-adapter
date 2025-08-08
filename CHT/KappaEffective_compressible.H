@@ -23,7 +23,7 @@ protected:
 
     //- Turbulence (and thermo/transport) model
     const Foam::compressible::turbulenceModel& turbulence_;
-    
+
 public:
     //- Constructor
     KappaEff_Compressible(const Foam::fvMesh& mesh);

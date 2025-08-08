@@ -36,21 +36,21 @@ inline Foam::clockValue Foam::clockValue::now()
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
 inline Foam::clockValue::clockValue()
-:
-    value_(value_type::zero())
-{}
+: value_(value_type::zero())
+{
+}
 
 
 inline Foam::clockValue::clockValue(bool)
-:
-    value_(std::chrono::high_resolution_clock::now().time_since_epoch())
-{}
+: value_(std::chrono::high_resolution_clock::now().time_since_epoch())
+{
+}
 
 
 inline Foam::clockValue::clockValue(const value_type& value)
-:
-    value_(value)
-{}
+: value_(value)
+{
+}
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
@@ -89,11 +89,9 @@ inline double Foam::clockValue::elapsedTime() const
 
 inline Foam::clockValue::operator double() const
 {
-    return
-    (
+    return (
         (double(value_.count()) * value_type::period::num)
-      / value_type::period::den
-    );
+        / value_type::period::den);
 }
 
 
