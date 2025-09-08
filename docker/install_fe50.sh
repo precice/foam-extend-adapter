@@ -19,7 +19,7 @@ make
 ./rigid_body_solver &
 #cd ../fluid-foam-extend || exit
 cd ../fluid-openfoam || exit
-sed -i "s/run-openfoam/run-foam-extend" run.sh
+sed -i "s/run-openfoam/run-foam-extend/g" run.sh
 grep -r pimpleFoam
 ./run.sh
 
