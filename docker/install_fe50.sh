@@ -20,7 +20,7 @@ make
 #cd ../fluid-foam-extend || exit
 cd ../fluid-openfoam || exit
 sed -i "s/run-openfoam/run-foam-extend" run.sh
-grep -r pimpeFoam
+grep -r pimpleFoam
 ./run.sh
 
 exit 0
