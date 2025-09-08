@@ -11,11 +11,18 @@ git checkout foam-extend-dev
 ./Allwmake
 
 cd /home/foamuser/tutorials/quickstart || exit
+git pull
 rm -rf precice-run
 cd solid-cpp || exit
 cmake .
 make
 ./rigid_body_solver &
-cd ../fluid-foam-extend || exit
-blockMesh
-pimpleDyMFoam
+#cd ../fluid-foam-extend || exit
+cd ../fluid-openfoam || exit
+sed -i "s/run-openfoam/run-foam-extend/g" run.sh
+mkdir constant/polyMesh
+cp system/blockMeshDict constant/polyMesh
+
+./run.sh
+
+exit 0
