@@ -20,7 +20,9 @@ make
 #cd ../fluid-foam-extend || exit
 cd ../fluid-openfoam || exit
 sed -i "s/run-openfoam/run-foam-extend/g" run.sh
-grep -r pimpleFoam
+mkdir constant/polyMesh
+cp system/blockMeshDict constant/polyMesh
+
 ./run.sh
 
 exit 0
