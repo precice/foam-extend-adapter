@@ -19,6 +19,7 @@ make
 ./rigid_body_solver &
 #cd ../fluid-foam-extend || exit
 cd ../fluid-openfoam || exit
-../../tools/run-foam-extend.sh
+sed -i "s/run-openfoam/run-foam-extend" run.sh
+./run.sh
 
 exit 0
