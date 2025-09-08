@@ -11,13 +11,14 @@ git checkout foam-extend-5.0
 ./Allwmake
 
 cd /home/foamuser/tutorials/quickstart || exit
+git pull
 rm -rf precice-run
 cd solid-cpp || exit
 cmake .
 make
 ./rigid_body_solver &
-cd ../fluid-foam-extend || exit
-blockMesh
-pimpleDyMFoam
+#cd ../fluid-foam-extend || exit
+cd ../fluid-openfoam || exit
+../../tools/run-foam-extend.sh
 
 exit 0
