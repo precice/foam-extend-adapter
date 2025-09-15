@@ -4,13 +4,13 @@ on:
     inputs:
       virtualEnvironment:
         description: 'Virtual Environment'
-        default: 'ubuntu-18.04'
+        default: 'ubuntu-22.04'
         required: true
         type: choice
         options:
+          - ubuntu-24.04
           - ubuntu-22.04
           - ubuntu-20.04
-          - ubuntu-18.04
       refAdapter:
         description: 'Ref (branch/tag/commit) of the OpenFOAM adapter to build'
         default: 'develop'
@@ -20,6 +20,7 @@ on:
         required: true
         type: choice
         options:
+          - 2412
           - 2406
           - 2312
           - 2306
@@ -34,11 +35,9 @@ on:
           - 9
           - 8
           - 7
-          - 6
-          - 5
       versionpreCICE:
         description: 'Version of preCICE to build with'
-        default: 'v3.0.0'
+        default: 'v3.2.0'
         required: true
       runTutorialHeatedPlate:
         description: Run tutorial flow-over-heated-plate
@@ -76,7 +75,7 @@ jobs:
         echo "Run tutorial partitioned-pipe: ${{ github.event.inputs.runTutorialPartitionedPipe }}"
         echo "Tutorials branch: ${{ github.event.inputs.branchTutorials }}"
     - name: Check out repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         ref: ${{ github.event.inputs.refAdapter }}
     - name: Install preCICE (no cache)
@@ -122,6 +121,7 @@ jobs:
           ./run.sh | tee fluid-openfoam.log 2>&1 &
           PIDfluid=$!
           cd ../solid-cpp
+          apt-get update && apt-get -y install cmake
           cmake . && make && ./run.sh | tee solid-cpp.log 2>&1
           wait $PIDfluid
         fi
