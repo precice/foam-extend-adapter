@@ -17,8 +17,11 @@ cmake .
 make
 
 ./rigid_body_solver &
-cd ../fluid-foam-extend || exit
-blockMesh
-pimpleDyMFoam
+cd ../fluid-openfoam || exit
+sed -i "s/run-openfoam/run-foam-extend/g" run.sh
+mkdir -p constant/polyMesh
+cp system/blockMeshDict constant/polyMesh/blockMeshDict
+
+./run.sh
 
 exit 0

@@ -403,6 +403,13 @@ void preciceAdapter::Adapter::configure()
             "info");
         const_cast<Time&>(runTime_).setEndTime(GREAT);
     }
+    // Need to catch preCICE errors as they are
+    // thrown as precice::Error instead of aborting.
+    catch (const precice::Error& e)
+    {
+        adapterInfo(e.what(), "error-deferred");
+        errorsInConfigure = true;
+    }
     catch (const Foam::error& e)
     {
         adapterInfo(e.message(), "error-deferred");
@@ -430,73 +437,84 @@ void preciceAdapter::Adapter::execute()
     // TODO add a function which checks if all fields are checkpointed.
     // if (ncheckpointed is nregisterdobjects. )
 
-    // Write the coupling data in the buffer
-    writeCouplingData();
-
-    // Advance preCICE
-    advance();
-
-    // Read checkpoint if required
-    if (requiresReadingCheckpoint())
+    // Same as above, preCICE v3.2 throws internal preCICE errors
+    // as precice::Error instead of aborting the process.
+    // Catching them here and fail through OpenFOAM's own
+    // fatal error path, so simulation shuts down cleanly.
+    try
     {
-        readCheckpoint();
-    }
+        // Write the coupling data in the buffer
+        writeCouplingData();
 
-    // Write checkpoint if required
-    if (requiresWritingCheckpoint())
-    {
-        writeCheckpoint();
-    }
+        // Advance preCICE
+        advance();
 
-    // As soon as OpenFOAM writes the results, it will not try to write again
-    // if the time takes the same value again. Therefore, during an implicit
-    // coupling, we write again when the coupling timestep is complete.
-    // Check the behavior e.g. by using watch on a result file:
-    //     watch -n 0.1 -d ls --full-time Fluid/0.01/T.gz
-    SETUP_TIMER();
-    if (checkpointing_ && isCouplingTimeWindowComplete())
-    {
-        // Check if the time directory already exists
-        // (i.e. the solver wrote results that need to be updated)
-        if (runTime_.timePath().type() == fileName::DIRECTORY)
+        // Read checkpoint if required
+        if (requiresReadingCheckpoint())
         {
+            readCheckpoint();
+        }
+
+        // Write checkpoint if required
+        if (requiresWritingCheckpoint())
+        {
+            writeCheckpoint();
+        }
+
+        // As soon as OpenFOAM writes the results, it will not try to write again
+        // if the time takes the same value again. Therefore, during an implicit
+        // coupling, we write again when the coupling timestep is complete.
+        // Check the behavior e.g. by using watch on a result file:
+        //     watch -n 0.1 -d ls --full-time Fluid/0.01/T.gz
+        SETUP_TIMER();
+        if (checkpointing_ && isCouplingTimeWindowComplete())
+        {
+            // Check if the time directory already exists
+            // (i.e. the solver wrote results that need to be updated)
+            if (runTime_.timePath().type() == fileName::DIRECTORY)
+            {
+                adapterInfo(
+                    "The coupling timestep completed. "
+                    "Writing the updated results.",
+                    "info");
+                const_cast<Time&>(runTime_).writeNow();
+            }
+        }
+        ACCUMULATE_TIMER(timeInWriteResults_);
+
+        // Adjust the timestep, if it is fixed
+        if (!adjustableTimestep_)
+        {
+            adjustSolverTimeStepAndReadData();
+        }
+
+        // If the coupling is not going to continue, tear down everything
+        // and stop the simulation.
+        if (!isCouplingOngoing())
+        {
+            adapterInfo("The coupling completed.", "info");
+
+            // Finalize the preCICE solver interface and delete data
+            finalize();
+
+            // Tell OpenFOAM to stop the simulation.
+            // Set the solver's endTime to now. The next evaluation of
+            // runTime.run() will be false and the solver will exit.
+            const_cast<Time&>(runTime_).setEndTime(runTime_.value());
             adapterInfo(
-                "The coupling timestep completed. "
-                "Writing the updated results.",
+                "The simulation was ended by preCICE. "
+                "Calling the end() methods of any functionObject explicitly.",
                 "info");
-            const_cast<Time&>(runTime_).writeNow();
+            adapterInfo("Great that you are using the OpenFOAM-preCICE adapter! "
+                        "Next to the preCICE library and any other components, please also cite this adapter. "
+                        "Find how on https://precice.org/adapter-openfoam-overview.html.",
+                        "info");
+            const_cast<Time&>(runTime_).functionObjects().end();
         }
     }
-    ACCUMULATE_TIMER(timeInWriteResults_);
-
-    // Adjust the timestep, if it is fixed
-    if (!adjustableTimestep_)
+    catch (const precice::Error& e)
     {
-        adjustSolverTimeStepAndReadData();
-    }
-
-    // If the coupling is not going to continue, tear down everything
-    // and stop the simulation.
-    if (!isCouplingOngoing())
-    {
-        adapterInfo("The coupling completed.", "info");
-
-        // Finalize the preCICE solver interface and delete data
-        finalize();
-
-        // Tell OpenFOAM to stop the simulation.
-        // Set the solver's endTime to now. The next evaluation of
-        // runTime.run() will be false and the solver will exit.
-        const_cast<Time&>(runTime_).setEndTime(runTime_.value());
-        adapterInfo(
-            "The simulation was ended by preCICE. "
-            "Calling the end() methods of any functionObject explicitly.",
-            "info");
-        adapterInfo("Great that you are using the OpenFOAM-preCICE adapter! "
-                    "Next to the preCICE library and any other components, please also cite this adapter. "
-                    "Find how on https://precice.org/adapter-openfoam-overview.html.",
-                    "info");
-        const_cast<Time&>(runTime_).functionObjects().end();
+        adapterInfo(e.what(), "error");
     }
 
     return;
