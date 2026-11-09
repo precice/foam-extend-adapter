@@ -3,8 +3,36 @@ FROM ubuntu:20.04
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && DEBIAN_FRONTEND=noninteractive apt-get install -y git-core build-essential binutils-dev cmake flex bear zlib1g-dev libncurses5-dev libreadline-dev libxt-dev rpm mercurial graphviz python python-dev  python3 python3-dev gnuplot gnuplot-qt gnuplot-data mercurial wget sudo vim bzip2 zip
 
-RUN wget https://github.com/precice/precice/releases/download/v3.1.1/libprecice3_3.1.1_focal.deb
-RUN DEBIAN_FRONTEND=noninteractive apt install -y ./libprecice3_3.1.1_focal.deb
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y libopenmpi-dev openmpi-bin libxml2-dev pkg-config
+
+RUN cd /opt && wget https://github.com/Kitware/CMake/releases/download/v3.30.5/cmake-3.30.5-linux-x86_64.tar.gz \
+    && tar xzf cmake-3.30.5-linux-x86_64.tar.gz
+ENV PATH="/opt/cmake-3.30.5-linux-x86_64/bin:${PATH}"
+
+RUN git clone --branch 3.4.0 --depth 1 https://gitlab.com/libeigen/eigen.git /tmp/eigen \
+    && cmake -S /tmp/eigen -B /tmp/eigen/build -DCMAKE_INSTALL_PREFIX=/opt/eigen-3.4.0 -DEIGEN_BUILD_DOC=OFF -DBUILD_TESTING=OFF \
+    && cmake --install /tmp/eigen/build
+
+RUN cd /tmp && wget https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.gz \
+    && tar xzf boost_1_81_0.tar.gz && cd boost_1_81_0 \
+    && ./bootstrap.sh --prefix=/opt/boost-1.81.0 --with-libraries=log,thread,system,filesystem,program_options,test \
+    && ./b2 install -j"$(nproc)" link=shared threading=multi runtime-link=shared variant=release
+
+RUN git clone --branch v3.4.1 --depth 1 https://github.com/precice/precice.git /tmp/precice \
+    && cmake -S /tmp/precice -B /tmp/precice/build \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/opt/precice-3.4.1 \
+        -DCMAKE_PREFIX_PATH="/opt/eigen-3.4.0;/opt/boost-1.81.0" \
+        -DBOOST_ROOT=/opt/boost-1.81.0 \
+        -DPRECICE_FEATURE_PYTHON_ACTIONS=OFF \
+        -DPRECICE_FEATURE_PETSC_MAPPING=OFF \
+        -DBUILD_TESTING=OFF \
+        -DCMAKE_EXE_LINKER_FLAGS="-L/opt/boost-1.81.0/lib -Wl,-rpath,/opt/boost-1.81.0/lib" \
+        -DCMAKE_SHARED_LINKER_FLAGS="-L/opt/boost-1.81.0/lib -Wl,-rpath,/opt/boost-1.81.0/lib" \
+    && cmake --build /tmp/precice/build -j"$(nproc)" \
+    && cmake --install /tmp/precice/build
+ENV PKG_CONFIG_PATH="/opt/precice-3.4.1/lib/pkgconfig:/opt/precice-3.4.1/lib64/pkgconfig:${PKG_CONFIG_PATH}"
+ENV LD_LIBRARY_PATH="/opt/boost-1.81.0/lib:/opt/precice-3.4.1/lib:/opt/precice-3.4.1/lib64:${LD_LIBRARY_PATH}"
 
 RUN cd /tmp && wget https://gmplib.org/download/gmp/archive/gmp-4.2.4.tar.bz2
 RUN cd /tmp && bunzip2 gmp-4.2.4.tar.bz2 && tar xvf gmp-4.2.4.tar && cd gmp-4.2.4 && ./configure && make && make install
@@ -19,6 +47,7 @@ COPY sanitizer_platform_limits_posix.cc /tmp/gcc-5.5.0/libsanitizer/sanitizer_co
 COPY sanitizer_platform_limits_posix.h /tmp/gcc-5.5.0/libsanitizer/sanitizer_common/
 #RUN cd /tmp && tar xzvf gcc-5.5.0.tar.gz && cd gcc-5.5.0 && sed -i '141d' libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.cc && sed -i '233d' libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.cc && sed -i '233i   unsigned struct_ustat_sz = 64;' libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.cc && LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH ./configure --disable-multilib && LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH make && make install
 RUN cd /tmp &&  cd gcc-5.5.0 && LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH ./configure --disable-multilib && LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH make && LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH make install
+ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"
 
 
 RUN useradd -m foamuser
@@ -47,5 +76,5 @@ WORKDIR /home/foamuser
 RUN git clone https://github.com/hoehnp/tutorials
 WORKDIR /home/foamuser/tutorials/quickstart/solid-cpp
 RUN git checkout add_foam_extend_tutorial
-RUN bash -c "cmake . ; make" 
+RUN bash -c "export PKG_CONFIG_PATH=/opt/precice-3.4.1/lib/pkgconfig:/opt/precice-3.4.1/lib64/pkgconfig:\$PKG_CONFIG_PATH; cmake -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ . ; make"
 

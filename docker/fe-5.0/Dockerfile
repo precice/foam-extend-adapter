@@ -4,8 +4,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y git binutils-dev cmake flex zlib1g-dev libncurses5-dev curl bison libxt-dev rpm mercurial graphviz openmpi-bin libopenmpi-dev build-essential linux-generic libmpich-dev libopenmpi-dev metis  libmetis-dev libparmetis-dev scotch libscotch-dev python3 python3-dev python-is-python3 python3-setuptools mercurial wget sudo pkg-config
 
-RUN wget https://github.com/precice/precice/releases/download/v3.1.1/libprecice3_3.1.1_jammy.deb
-RUN DEBIAN_FRONTEND=noninteractive apt install -y ./libprecice3_3.1.1_jammy.deb
+RUN wget https://github.com/precice/precice/releases/download/v3.4.1/libprecice3_3.4.1_jammy.deb
+RUN DEBIAN_FRONTEND=noninteractive apt install -y ./libprecice3_3.4.1_jammy.deb
 
 RUN useradd -m foamuser
 RUN chown foamuser:foamuser /home/foamuser
